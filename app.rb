@@ -33,10 +33,10 @@ get("/:first_currency/:second_currency") do
 
   @first_currency = params.fetch("first_currency")
   @second_currency = params.fetch("second_currency")
-  conversion_url = "https://api.exchangerate.host/live?access_key=#{key}&source=#{@first_currency}&currencies=#{@second_currency}"
+  conversion_url = "https://api.exchangerate.host/convert?from=#{@first_currency}&to=#{@second_currency}&amount=1&access_key=#{key}"
   conversion_raw = HTTP.get(conversion_url).to_s
   conversion_json = JSON.parse(conversion_raw)
-  @conversion_rate = conversion_json.fetch("quotes").fetch("#{@first_currency}#{@second_currency}")
+  @conversion_rate = conversion_json.fetch("result")
   
   erb(:second_currency)
 
